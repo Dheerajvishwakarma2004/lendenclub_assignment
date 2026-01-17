@@ -23,14 +23,14 @@ pipeline {
             steps {
                 bat '''
                 docker run --rm ^
-                  -v "%cd%\\terraform:/infra" ^
-                  -w /infra ^
-                  hashicorp/terraform:1.6 init
+                -v "%cd%\\terraform:/infra" ^
+                -w /infra ^
+                hashicorp/terraform:1.6 init -lock=false -reconfigure
 
                 docker run --rm ^
-                  -v "%cd%\\terraform:/infra" ^
-                  -w /infra ^
-                  hashicorp/terraform:1.6 plan
+                -v "%cd%\\terraform:/infra" ^
+                -w /infra ^
+                hashicorp/terraform:1.6 plan -lock=false
                 '''
             }
         }
