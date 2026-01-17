@@ -198,7 +198,7 @@ sudo docker run -d --name web -p 80:5000 assignment
 
 Public URL:
 ```
-http://<EC2_PUBLIC_IP>
+http://3.110.174.170/
 ```
 
 ---
