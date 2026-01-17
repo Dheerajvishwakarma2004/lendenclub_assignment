@@ -7,7 +7,7 @@ resource "aws_security_group" "secure_sg" {
   description = "Secure security group with restricted access"
 
   ingress {
-    description = "Allow SSH only from trusted IP"
+    description = "Allow SSH only from admin IP"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -15,19 +15,19 @@ resource "aws_security_group" "secure_sg" {
   }
 
   ingress {
-    description = "Allow application traffic internally"
-    from_port   = 5000
-    to_port     = 5000
+    description = "Allow public HTTP access to application"
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    description      = "Allow outbound HTTPS to AWS services only"
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    prefix_list_ids  = ["pl-63a5400a"] # AWS S3 prefix list (region-safe example)
+    description = "Allow outbound HTTPS"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
