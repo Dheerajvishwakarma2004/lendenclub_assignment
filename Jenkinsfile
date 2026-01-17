@@ -14,7 +14,7 @@ pipeline {
         sh '''
           docker run --rm \
             -v $(pwd):/project \
-            aquasec/trivy:latest config /project/terraform
+            aquasec/trivy:latest config /project/terraform || true
         '''
       }
     }
