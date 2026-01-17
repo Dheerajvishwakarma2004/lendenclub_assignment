@@ -23,11 +23,11 @@ resource "aws_security_group" "secure_sg" {
   }
 
   egress {
-    description = "Allow outbound HTTPS only"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    description      = "Allow outbound HTTPS to AWS services only"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    prefix_list_ids  = ["pl-63a5400a"] # AWS S3 prefix list (region-safe example)
   }
 }
 
