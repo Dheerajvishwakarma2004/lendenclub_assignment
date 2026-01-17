@@ -2,39 +2,50 @@ provider "aws" {
   region = "ap-south-1"
 }
 
-resource "aws_security_group" "vulnerable_sg" {
-  name        = "vulnerable-sg"
-  description = "Intentionally vulnerable security group"
+resource "aws_security_group" "secure_sg" {
+  name        = "secure-sg"
+  description = "Secure security group with restricted access"
 
   ingress {
+    description = "Allow SSH only from trusted IP"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] 
+    cidr_blocks = ["YOUR_PUBLIC_IP/32"]
   }
 
   ingress {
+    description = "Allow application traffic internally"
     from_port   = 5000
     to_port     = 5000
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    description = "Allow outbound HTTPS only"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 resource "aws_instance" "web" {
-  ami           = "ami-0f5ee92e2d63afc18" # Amazon Linux 2 (ap-south-1)
+  ami           = "ami-0f5ee92e2d63afc18"
   instance_type = "t2.micro"
 
-  vpc_security_group_ids = [aws_security_group.vulnerable_sg.id]
+  vpc_security_group_ids = [aws_security_group.secure_sg.id]
+
+  metadata_options {
+    http_tokens = "required"
+  }
+
+  root_block_device {
+    encrypted = true
+  }
 
   tags = {
-    Name = "devsecops-vulnerable-instance"
+    Name = "devsecops-secure-instance"
   }
 }
