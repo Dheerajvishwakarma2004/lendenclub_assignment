@@ -1,40 +1,38 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
+    stages {
 
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Terraform Security Scan') {
+            steps {
+                bat '''
+                docker run --rm ^
+                  -v "%cd%:/project" ^
+                  aquasec/trivy:latest config /project/terraform
+                '''
+            }
+        }
+
+        stage('Terraform Init & Plan') {
+            steps {
+                bat '''
+                docker run --rm ^
+                  -v "%cd%\\terraform:/infra" ^
+                  -w /infra ^
+                  hashicorp/terraform:1.6 init
+
+                docker run --rm ^
+                  -v "%cd%\\terraform:/infra" ^
+                  -w /infra ^
+                  hashicorp/terraform:1.6 plan
+                '''
+            }
+        }
     }
-
-    stage('Terraform Security Scan') {
-      steps {
-        sh '''
-          docker run --rm \
-            -v $(pwd):/project \
-            aquasec/trivy:latest config /project/terraform || true
-        '''
-      }
-    }
-
-    stage('Terraform Init & Plan') {
-      steps {
-        sh '''
-          docker run --rm \
-            -v $(pwd)/terraform:/infra \
-            -w /infra \
-            hashicorp/terraform:1.6 \
-            init
-          
-          docker run --rm \
-            -v $(pwd)/terraform:/infra \
-            -w /infra \
-            hashicorp/terraform:1.6 \
-            plan
-        '''
-      }
-    }
-  }
 }
