@@ -19,18 +19,18 @@ pipeline {
             }
         }
 
-        stage('Terraform Init & Plan') {
+        stage('Terraform Init (Validation Only)') {
             steps {
                 bat '''
                 docker run --rm ^
                 -v "%cd%\\terraform:/infra" ^
                 -w /infra ^
-                hashicorp/terraform:1.6 init -lock=false -reconfigure
+                hashicorp/terraform:1.6 init -lock=false -input=false -reconfigure
 
                 docker run --rm ^
                 -v "%cd%\\terraform:/infra" ^
                 -w /infra ^
-                hashicorp/terraform:1.6 plan -lock=false
+                hashicorp/terraform:1.6 validate
                 '''
             }
         }
