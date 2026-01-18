@@ -1,7 +1,5 @@
 # DevSecOps Assignment – GET 2026
 
-**Author:** Dheeraj Omprakash Vishwakarma
-
 ---
 
 ## 1. Project Overview
@@ -226,24 +224,43 @@ Re-validate with Trivy after each change.
 
 ## 11. Screenshots
 
-Include screenshots for:
-- Jenkins pipeline execution
-- Trivy scan (before and after remediation)
-- Terraform apply
-- Docker container running
-- Application accessed via browser
+### Part 1: Failing Jenkins Pipeline (Security Vulnerabilities Detected)
+
+#### Screenshot 1: Security Group Vulnerability
+![Security Group Vulnerability](screenshots/1_Error_Security%20group%20vulnerability.png)
+
+#### Screenshot 2: Unrestricted Access Warning
+![Unrestricted Access Warning](screenshots/2_Error_allow%20unrestricted%20access.png)
+
+#### Screenshot 3: Encryption Not Enabled
+![Encryption Not Enabled](screenshots/3_Error_Not%20encrypted.png)
+
+#### Screenshot 4: Build Failed
+![Build Failed](screenshots/4_Build_Failed.png)
+
+### Part 2: Jenkins Pipeline After Fixes
+
+#### Screenshot 5: Build Success After Fixing Errors
+![Build Success After Fixing Errors](screenshots/5_After%20fixing%20error%20Build%20Success.png)
+
+### Part 3: Deployment
+
+#### Screenshot 6: Deployed Web Application
+![Deployed Web Application](screenshots/6_Deployed%20web%20app.png)
 
 ---
 
 ## 12. Video Demonstration
 
-Provide a 5–10 minute screen recording demonstrating:
+A 5–10 minute screen recording demonstrating:
 - Jenkins pipeline execution
 - Trivy security scan
 - Terraform provisioning
 - Application running on AWS
 
-Video link: <PASTE_VIDEO_LINK_HERE>
+**Video:** [DevSecOps Pipeline Demo](video/demo_video.mp4)
+
+*Note: You can also view the video on [YouTube/Google Drive Link - To be added]*
 
 ---
 
@@ -264,3 +281,7 @@ Destroy infrastructure when done:
 cd terraform
 terraform destroy
 ```
+
+---
+
+**Author:** Dheeraj Omprakash Vishwakarma
