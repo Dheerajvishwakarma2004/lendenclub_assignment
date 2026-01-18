@@ -260,8 +260,6 @@ A 5–10 minute screen recording demonstrating:
 
 **Video:** [DevSecOps Pipeline Demo](video/demo_video.mp4)
 
-*Note: You can also view the video on [YouTube/Google Drive Link - To be added]*
-
 ---
 
 ## 13. Notes and Best Practices
